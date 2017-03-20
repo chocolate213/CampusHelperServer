@@ -1,5 +1,6 @@
 package cn.jxzhang.common.utils;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -23,5 +24,18 @@ public class CommonUtils {
      */
     public static String generateUUID() {
         return UUID.randomUUID().toString().replace("-", "").toLowerCase();
+    }
+
+    /**
+     * generate random number by given length.
+     *
+     * @param length random number length
+     * @return A random number
+     */
+    public static String generateRandomCode(int length){
+        if (length < 0) {
+            throw new IllegalArgumentException("random code length must be more than 0");
+        }
+        return (int)((Math.random() * 9 + 1)  * (Math.pow(10, length - 1))) + "";
     }
 }

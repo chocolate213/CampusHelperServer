@@ -1,5 +1,6 @@
 package cn.jxzhang.server.campushelper.service.impl;
 
+import cn.jxzhang.common.utils.CommonUtils;
 import cn.jxzhang.common.utils.DigestUtils;
 import cn.jxzhang.server.campushelper.pojo.User;
 import cn.jxzhang.server.campushelper.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created on 2017-03-16 19:03
@@ -62,6 +64,17 @@ public class UserServiceImplTest {
     public void testMd5(){
         String s = DigestUtils.md5DigestAsHex("Hello World");
         System.out.println(s);
+    }
+
+    @Test
+    public void generateRandomNumber(){
+        Integer a = (Integer) test();
+        System.out.println(a);
+
+    }
+
+    public Object test() {
+        return null;
     }
 
 }

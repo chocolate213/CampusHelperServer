@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int insertUserAuth(User user) {
-        String sql = "INSERT INTO campus_helper.user_auths(user_auths.auth_id,user_auths.user_id,user_auths.identity_type,user_auths.identifier,user_auths.credential, user_auths.is_third_party_account) VALUE (?,?,?,?,?)";
+        String sql = "INSERT INTO campus_helper.user_auths(user_auths.auth_id,user_auths.user_id,user_auths.identity_type,user_auths.identifier,user_auths.credential, user_auths.is_third_party_account) VALUE (?,?,?,?,?,?)";
         return template.update(sql, CommonUtils.generateUUID(), user.getUserId(), user.getIdentityType(), user.getIdentifier(), user.getCredential(), user.getIsThirdPartyAccount());
     }
 
