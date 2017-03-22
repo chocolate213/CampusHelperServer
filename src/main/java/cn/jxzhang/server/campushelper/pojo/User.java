@@ -20,6 +20,7 @@ public class User {
     private String accountName;
     private String email;
     private String phone;
+    private String verifyCode;
 
     @Override
     public String toString() {
@@ -33,7 +34,16 @@ public class User {
                 ", accountName='" + accountName + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", verifyCode='" + verifyCode + '\'' +
                 '}';
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
     public String getIsThirdPartyAccount() {

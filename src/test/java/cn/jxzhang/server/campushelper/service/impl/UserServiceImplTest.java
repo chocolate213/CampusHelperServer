@@ -1,9 +1,12 @@
 package cn.jxzhang.server.campushelper.service.impl;
 
+import cn.jxzhang.common.RegexString;
 import cn.jxzhang.common.utils.CommonUtils;
 import cn.jxzhang.common.utils.DigestUtils;
+import cn.jxzhang.common.utils.MailUtil;
 import cn.jxzhang.server.campushelper.pojo.User;
 import cn.jxzhang.server.campushelper.service.UserService;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,6 +78,17 @@ public class UserServiceImplTest {
 
     public Object test() {
         return null;
+    }
+
+    @Test
+    public void testEmail() throws Exception {
+        sendEmail("1083276704@qq.com", "234568");
+    }
+
+    private void sendEmail(String account, String code) throws Exception {
+        String template = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("mail.html"));
+        String content = String.format(template, code);
+        MailUtil.sendEmail(account, "校园助手 - 账户验证", content);
     }
 
 }
