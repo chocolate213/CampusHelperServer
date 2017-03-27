@@ -5,6 +5,7 @@ import cn.jxzhang.common.CampusHelperException;
 import cn.jxzhang.common.RegexString;
 import cn.jxzhang.common.message.ResponseMessage;
 import cn.jxzhang.common.utils.CommonUtils;
+import cn.jxzhang.common.utils.DateUtils;
 import cn.jxzhang.common.utils.MailUtil;
 import cn.jxzhang.common.utils.TextUtils;
 import cn.jxzhang.server.campushelper.pojo.IdentityType;
@@ -38,7 +39,9 @@ public class UserController extends BaseController {
      */
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    private static final int REQUEST_VERIFY_CODE_THRESOULD_TIMES = 10;
+    private static final int REQUEST_VERIFY_CODE_THRESHOLD_TIMES = 100;
+
+    private static final int VERIFY_CODE_LENGTH = 6;
 
     private final UserService userService;
 
@@ -46,6 +49,26 @@ public class UserController extends BaseController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+
+    /**
+     * 登陆
+     *
+     * @param user 待登陆的账户
+     * @return
+     * @throws CampusHelperException
+     */
+    @ResponseBody
+    @RequestMapping("signIn")
+    public ResponseMessage signIn(@RequestBody User user, HttpServletRequest request) throws CampusHelperException {
+        log.debug("attempt to signIn user: {}", user);
+        String ip = request.getRemoteAddr();
+        user.setLoginIp(ip);
+        User userInfo = userService.signIn(user);
+        log.debug("user: {} sign in success, login ip : {}, last login time : {}", userInfo.getAccountName(), userInfo.getLoginIp(), DateUtils.formatDate(userInfo.getLastLoginTime()));
+        return SUCCESS(userInfo);
+    }
+
 
     /**
      * 注册账户
@@ -89,7 +112,7 @@ public class UserController extends BaseController {
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping("sendVerifyCode/{account}")
+    @RequestMapping("sendVerifyCode/{account:.+}")
     public ResponseMessage sendVerifyCode(@PathVariable("account") String account, HttpSession session, HttpServletRequest request) throws Exception {
         User user = sendVerifyCodeToAccount(account, session, request);
         return SUCCESS(user);
@@ -104,7 +127,7 @@ public class UserController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("verifyVerifyCode/{account}/{code}")
+    @RequestMapping("verifyVerifyCode/{account:.+}/{code}")
     public ResponseMessage verifyVerifyCode(@PathVariable("account") String account,
                                             @PathVariable("code") String code,
                                             HttpSession session) {
@@ -122,6 +145,32 @@ public class UserController extends BaseController {
     }
 
     /**
+     * 判断账户类型
+     *
+     * @param user 待修改密码的账户
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("getAccountType")
+    public ResponseMessage getAccountType(@RequestBody User user) throws CampusHelperException {
+        User result = userService.getAccountType(user);
+        return SUCCESS(result);
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param user 待修改密码的账户
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("resetPassword")
+    public ResponseMessage resetPassword(@RequestBody User user) {
+        userService.resetPassword(user);
+        return SUCCESS();
+    }
+
+    /**
      * 生成验证码
      *
      * @param account 账户名
@@ -136,7 +185,7 @@ public class UserController extends BaseController {
         }
         log.info("attempt to generate verify code for account : {}", account);
         verifyRequestForVerifyCodeTimes(session, request);
-        String code = CommonUtils.generateRandomCode(6);
+        String code = CommonUtils.generateRandomCode(VERIFY_CODE_LENGTH);
         log.info("generated verify code : " + code);
         session.setAttribute(account, code);
         return code;
@@ -170,6 +219,7 @@ public class UserController extends BaseController {
         } else {
             throw new CampusHelperException("参数错误，请检查");
         }
+
         return user;
     }
 
@@ -191,7 +241,7 @@ public class UserController extends BaseController {
      */
     private void sendEmail(String account, String code) throws Exception {
         log.info("send EMAIL to : {}, verify code : {}", account, code);
-        String template = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("mail.html"));
+        String template = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("mail.html"), "UTF-8");
         String content = String.format(template, code);
         MailUtil.sendEmail(account, "校园助手 - 账户验证", content);
     }
@@ -215,7 +265,7 @@ public class UserController extends BaseController {
 
         log.info("client ip : {} , the {} time request for verify code.", ip, times);
 
-        if (times >= REQUEST_VERIFY_CODE_THRESOULD_TIMES) {
+        if (times >= REQUEST_VERIFY_CODE_THRESHOLD_TIMES) {
             throw new CampusHelperException("您的验证码请求次数过于频繁，请稍后再试");
         }
 

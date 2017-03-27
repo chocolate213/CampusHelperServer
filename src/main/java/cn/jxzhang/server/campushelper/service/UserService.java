@@ -1,5 +1,6 @@
 package cn.jxzhang.server.campushelper.service;
 
+import cn.jxzhang.common.CampusHelperException;
 import cn.jxzhang.server.campushelper.pojo.User;
 
 /**
@@ -14,4 +15,10 @@ public interface UserService {
     void signUp(User user);
 
     boolean isAccountExist(User user);
+
+    void resetPassword(User user);
+
+    User getAccountType(User user) throws CampusHelperException;
+
+    User signIn(User user) throws CampusHelperException;
 }

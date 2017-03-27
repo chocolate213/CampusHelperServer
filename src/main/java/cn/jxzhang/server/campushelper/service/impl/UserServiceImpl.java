@@ -1,5 +1,6 @@
 package cn.jxzhang.server.campushelper.service.impl;
 
+import cn.jxzhang.common.CampusHelperException;
 import cn.jxzhang.common.utils.CommonUtils;
 import cn.jxzhang.common.utils.TextUtils;
 import cn.jxzhang.server.campushelper.dao.UserDao;
@@ -9,6 +10,7 @@ import cn.jxzhang.server.campushelper.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,5 +81,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isAccountExist(User user) {
         return userDao.isAccountExist(user);
+    }
+
+    @Transactional
+    @Override
+    public void resetPassword(User user) {
+        userDao.resetPassword(user);
+    }
+
+    @Override
+    public User getAccountType(User user) throws CampusHelperException {
+        User result = null;
+        try {
+            result = userDao.getAccountType(user);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            log.error("用户不存在",e);
+            throw new CampusHelperException("用户不存在", e);
+        }
+        return result;
+    }
+
+    @Override
+    public User signIn(User user) throws CampusHelperException {
+        return userDao.signIn(user);
     }
 }

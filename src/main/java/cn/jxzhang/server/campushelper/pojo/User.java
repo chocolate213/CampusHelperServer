@@ -16,66 +16,118 @@ public class User {
     private String credential;
     private String isVerified;
     private String isThirdPartyAccount;
-
+    private Long loginTime;
+    private Long lastLoginTime;
+    private String loginIp;
     private String accountName;
     private String email;
     private String phone;
     private String verifyCode;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", identityType='" + identityType + '\'' +
-                ", identifier='" + identifier + '\'' +
-                ", credential='" + credential + '\'' +
-                ", isVerified='" + isVerified + '\'' +
-                ", isThirdPartyAccount='" + isThirdPartyAccount + '\'' +
-                ", accountName='" + accountName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", verifyCode='" + verifyCode + '\'' +
-                '}';
+    private String nickname;
+    private String head;
+    private String gender;
+    private String birth;
+    private String stuNo;
+    private String stuClass;
+    private String stuDept;
+    private String stuCollege;
+    private String qq;
+
+    public String getNickname() {
+        return nickname;
     }
 
-    public String getVerifyCode() {
-        return verifyCode;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public void setVerifyCode(String verifyCode) {
-        this.verifyCode = verifyCode;
+    public String getHead() {
+        return head;
     }
 
-    public String getIsThirdPartyAccount() {
-        return isThirdPartyAccount;
+    public void setHead(String head) {
+        this.head = head;
     }
 
-    public void setIsThirdPartyAccount(String isThirdPartyAccount) {
-        this.isThirdPartyAccount = isThirdPartyAccount;
+    public String getGender() {
+        return gender;
     }
 
-    public String getEmail() {
-        return email;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getBirth() {
+        return birth;
     }
 
-    public String getPhone() {
-        return phone;
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getStuNo() {
+        return stuNo;
     }
 
-    public String getAccountName() {
-        return accountName;
+    public void setStuNo(String stuNo) {
+        this.stuNo = stuNo;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public String getStuClass() {
+        return stuClass;
+    }
+
+    public void setStuClass(String stuClass) {
+        this.stuClass = stuClass;
+    }
+
+    public String getStuDept() {
+        return stuDept;
+    }
+
+    public void setStuDept(String stuDept) {
+        this.stuDept = stuDept;
+    }
+
+    public String getStuCollege() {
+        return stuCollege;
+    }
+
+    public void setStuCollege(String stuCollege) {
+        this.stuCollege = stuCollege;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public Long getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Long loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public Long getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Long lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLoginIp() {
+        return loginIp;
+    }
+
+    public void setLoginIp(String loginIp) {
+        this.loginIp = loginIp;
     }
 
     public String getUserId() {
@@ -116,5 +168,73 @@ public class User {
 
     public void setIsVerified(String isVerified) {
         this.isVerified = isVerified;
+    }
+
+    public String getIsThirdPartyAccount() {
+        return isThirdPartyAccount;
+    }
+
+    public void setIsThirdPartyAccount(String isThirdPartyAccount) {
+        this.isThirdPartyAccount = isThirdPartyAccount;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", identityType='" + identityType + '\'' +
+                ", identifier='" + identifier + '\'' +
+                ", credential='" + credential + '\'' +
+                ", isVerified='" + isVerified + '\'' +
+                ", isThirdPartyAccount='" + isThirdPartyAccount + '\'' +
+                ", loginTime=" + loginTime +
+                ", lastLoginTime=" + lastLoginTime +
+                ", loginIp='" + loginIp + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", verifyCode='" + verifyCode + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", head='" + head + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birth='" + birth + '\'' +
+                ", stuNo='" + stuNo + '\'' +
+                ", stuClass='" + stuClass + '\'' +
+                ", stuDept='" + stuDept + '\'' +
+                ", stuCollege='" + stuCollege + '\'' +
+                ", qq='" + qq + '\'' +
+                '}';
     }
 }

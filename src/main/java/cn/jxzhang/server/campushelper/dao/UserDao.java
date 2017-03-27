@@ -1,5 +1,6 @@
 package cn.jxzhang.server.campushelper.dao;
 
+import cn.jxzhang.common.CampusHelperException;
 import cn.jxzhang.server.campushelper.pojo.User;
 
 /**
@@ -19,4 +20,10 @@ public interface UserDao {
     String generateUserId();
 
     int insertAccountName(User user);
+
+    void resetPassword(User user);
+
+    User getAccountType(User user);
+
+    User signIn(User user) throws CampusHelperException;
 }

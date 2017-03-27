@@ -29,9 +29,9 @@ public class ServerExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         ModelAndView mv = new ModelAndView();
-        response.setStatus(HttpStatus.OK.value()); //设置状态码
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE); //设置ContentType
-        response.setCharacterEncoding("UTF-8"); //避免乱码
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
         response.setHeader("Cache-Control", "no-cache, must-revalidate");
         try {
             ResponseMessage responseMessage = new ResponseMessage();
