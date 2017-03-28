@@ -19,7 +19,7 @@ public interface UserDao {
 
     String generateUserId();
 
-    int insertAccountName(User user);
+    int insertUserInfo(User user);
 
     void resetPassword(User user);
 

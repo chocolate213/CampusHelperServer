@@ -43,27 +43,18 @@ public class UserServiceImpl implements UserService {
         patchThirdPartyAccountFlag(user);
         user.setUserId(userId);
 
-        if (IdentityType.EMAIL.getType().equals(user.getIdentityType())) {
-            user.setIsThirdPartyAccount("0");
-            userDao.insertUserAuth(user);
-            log.debug("signUp user : {} with identifier : {}", user.getUserId(), user.getIdentifier());
-            user.setIdentifier(user.getAccountName());
-            user.setIdentityType(IdentityType.USERNAME.getType());
-            userDao.insertUserAuth(user);
-        }
-
-        if (IdentityType.PHONE.getType().equals(user.getIdentityType())) {
-            userDao.insertUserAuth(user);
-        }
+        userDao.insertUserAuth(user);
 
         if (TextUtils.isEmpty(user.getAccountName())) {
             String name = generateUserName();
             user.setAccountName(name);
         }
 
-        userDao.insertAccountName(user);
+        user.setIdentifier(user.getAccountName());
+        user.setIdentityType(IdentityType.USERNAME.getType());
+        userDao.insertUserAuth(user);
 
-        log.debug("signUp user : {} with identifier : {}", user.getUserId(), user.getIdentifier());
+        userDao.insertUserInfo(user);
     }
 
     private String generateUserName() {
@@ -101,6 +92,7 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Transactional
     @Override
     public User signIn(User user) throws CampusHelperException {
         return userDao.signIn(user);

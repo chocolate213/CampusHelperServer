@@ -23,7 +23,7 @@ public class User {
     private String email;
     private String phone;
     private String verifyCode;
-
+    private String description;
     private String nickname;
     private String head;
     private String gender;
@@ -33,6 +33,14 @@ public class User {
     private String stuDept;
     private String stuCollege;
     private String qq;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getNickname() {
         return nickname;
