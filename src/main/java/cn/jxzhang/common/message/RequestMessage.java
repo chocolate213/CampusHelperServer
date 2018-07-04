@@ -9,4 +9,7 @@ package cn.jxzhang.common.message;
  * @version 1.0
  */
 public class RequestMessage {
+    public static void main(String[] args) {
+        System.out.println("add code");
+    }
 }
